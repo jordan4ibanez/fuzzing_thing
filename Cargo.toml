@@ -1,0 +1,37 @@
+[package]
+name = "fuzzing_thing"
+version = "0.1.0"
+edition = "2021"
+
+# Always use the latest stable rust version in this project.
+# You can update your rust version with: rustup update stable
+rust-version = "1.75.0"
+
+[package.metadata]
+cargo-fuzz = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lints.rust]
+# DO NOT allow unsafe code.
+unsafe_code = "forbid"
+
+# These can be turned on and off for active development.
+dead_code = "allow"
+unused_variables = "allow"
+# unwrap_used = "forbid"
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "fuzz_target_1"
+path = "fuzz_targets/fuzz_target_1.rs"
+test = false
+doc = false
